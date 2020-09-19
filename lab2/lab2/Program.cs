@@ -9,7 +9,43 @@ namespace lab2
     {
         static void Main(string[] args)
         {
-            /*
+             (int, int, int, char) Tuple1(int[] mass, string word)
+            {
+                int max = 0, min = 0, sum = 0;
+
+                for (int i = 0; i < mass.Length; i++)
+                {
+                    sum += mass[i];
+                    if (max < mass[i])
+                        max = mass[i];
+                }
+                for (int i = 0; i < mass.Length; i++)
+                {
+                    if (min > mass[i])
+                        min = mass[i];
+                }
+
+                var MainTuple = (min, max, sum, word[0]);
+                return MainTuple;
+            }
+
+            int Checked1()
+            {
+                checked
+                {
+                    //short n = (short)(326593);
+                }
+                return 0;
+            }
+
+            int UnChecked1()
+            {
+                unchecked
+                {
+                    short n = (short)(326593);
+                }
+                return 0;
+            }
             //task a
             bool BoolVar = Convert.ToBoolean(Console.ReadLine());
             Console.WriteLine(BoolVar);
@@ -170,11 +206,11 @@ namespace lab2
             //arrays
 
             int[,] array = { { 1, 3 }, { 2, 8 } };
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (int row = 0; row < array.GetLength(0); i++)
             {
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
-                    Console.Write(array[i, j] + " ");
+                    Console.Write(array[row, j] + " ");
                 }
                 Console.WriteLine();
             }
@@ -182,54 +218,70 @@ namespace lab2
 
             string[] arrString = { "one", "two", "three", "four"};
             Console.WriteLine($"Length of array: {arrString.Length}");
-            for (int i = 0; i < arrString.Length; i++)
+            for (int row = 0; row < arrString.Length; row++)
             {
-                Console.WriteLine($"AS[{i}] = {arrString[i]}");
+                Console.WriteLine($"AS[{row}] = {arrString[row]}");
             }
             arrString[2] = "not three";
-            for (int i = 0; i < arrString.Length; i++)
+            for (int row = 0; i < arrString.Length; i++)
             {
-                Console.WriteLine($"AS[{i}] = {arrString[i]}");
+                Console.WriteLine($"AS[{row}] = {arrString[row]}");
             }
             
 
             double[][] DoubleArray = { new double[2], new double[3], new double[4] };
-            for (int i = 0; i < 2; i++)
+            for (int row = 0; row < 2; row++)
             {
-                Console.WriteLine("DoubleArray[" + 0 + "][" + i + "]: ");
-                DoubleArray[0][i] = double.Parse(Console.ReadLine());
+                Console.WriteLine("DoubleArray[" + 0 + "][" + row + "]: ");
+                DoubleArray[0][row] = double.Parse(Console.ReadLine());
             }
-            for (int i = 0; i < 3; i++)
+            for (int row = 0; row < 3; row++)
             {
-                Console.WriteLine("DoubleArray[" + 1 + "][" + i + "]: ");
+                Console.WriteLine("DoubleArray[" + 1 + "][" + row + "]: ");
 
-                DoubleArray[1][i] = double.Parse(Console.ReadLine());
+                DoubleArray[1][row] = double.Parse(Console.ReadLine());
             }
-            for (int i = 0; i < 4; i++)
+            for (int row = 0; row < 4; i++)
             {
-                Console.WriteLine("DoubleArray[" + 2 + "][" + i + "]: ");
+                Console.WriteLine("DoubleArray[" + 2 + "][" + row + "]: ");
 
-                DoubleArray[2][i] = double.Parse(Console.ReadLine());
+                DoubleArray[2][row] = double.Parse(Console.ReadLine());
             }
-            foreach (double[] x in DoubleArray)
+            foreach (double[] el in DoubleArray)
             {
-                foreach (double b in x)
-                    Console.Write("\t" + b);
+                foreach (double El in el)
+                    Console.Write("\t" + El);
                 Console.WriteLine();
             }
 
    
             var UnArray = new[]{ 3, 5, 6};
             var UnString = "some str"; 
-            */
+            
 
-            ValueTuple<int, string, char, string, ulong> tuple = (15, "string", 'h', "string too", 5324);
+            ValueTuple <int, string, char, string, ulong> tuple = (15, "string", 'h', "string too", 5324);
+            ValueTuple<int, string, char, string, ulong> tuple1 = (73, "string1", 'd', "string too1", 624);
+
             Console.WriteLine($"{tuple}");
             Console.WriteLine(tuple.Item2.ToString());
             Console.WriteLine(tuple.Item3);
             Console.WriteLine(tuple.Item4.ToString());
             var (one, two, three, four, five) = tuple;
+            (var onee, var twoe, var threee, var foure, var fivee) = tuple;
+            (int oneI, string twoSt, char threeCh, string fourSt, ulong fiveUL) = tuple;
+
+            if (tuple == tuple1)
+                Console.WriteLine("Одинаковые");
+            else
+                Console.WriteLine("Разные");
+
+
+            Checked1(); UnChecked1();
+            
         }
 
+        
+
+       
     }
 }
