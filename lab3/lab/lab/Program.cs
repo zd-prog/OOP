@@ -4,7 +4,8 @@ namespace lab
 {
     public class Train
     {
-        private string destination
+        private string destination;
+        public string Destination
         {
             get
             {
@@ -15,7 +16,8 @@ namespace lab
                 destination = value;
             }
         }
-        public int number
+        private int number;
+        public int Number
         {
             get
             {
@@ -26,7 +28,8 @@ namespace lab
                 number = value;
             }
         }
-        private string time
+        private double time;
+        public double Time
         {
             get
             {
@@ -37,8 +40,9 @@ namespace lab
                 time = value;
             }
         }
-        private const int amount = 100;
-        private int amount_kupe
+        public const int amount = 100;
+        public int amount_kupe;
+        public int Amount_kupe
         {
             get
             {
@@ -49,7 +53,8 @@ namespace lab
                 amount_kupe = value;
             }
         }
-        private int amount_plackart
+        public int amount_plackart;
+        public int Amount_plackart
         {
             get
             {
@@ -60,7 +65,8 @@ namespace lab
                 amount_plackart = value;
             }
         }
-        private int amount_lux
+        public int amount_lux;
+        public int Amount_lux
         {
             get
             {
@@ -83,13 +89,13 @@ namespace lab
         {
             destination = "";
             number = 100000;
-            time = "";
+            time = 0.00;
             amount_kupe = 0;
             amount_plackart = 0;
             amount_lux = 0;
             kolichestvo++;
         }
-        public Train(string a, int b, string c, int e, int f, int g)
+        public Train(string a, int b, double c, int e, int f, int g)
         {
             destination = a;
             number = b;
@@ -99,7 +105,7 @@ namespace lab
             amount_lux = g;
             kolichestvo++;
         }
-        public Train(string a = "", int b = 10000, string c = "", int e = 0, int f = 0)
+        public Train(string a = "", int b = 10000, double c = 0.00, int e = 0, int f = 0)
         {
             destination = a;
             number = b;
@@ -155,11 +161,25 @@ namespace lab
     {
         static void Main(string[] args)
         {
-            Train tr1 = new Train("Питер", 12345, "17:15", 25, 40, 35);
-            Train tr2 = new Train("Москва", 22345, "17:45", 43, 27, 30);
-            Train tr3 = new Train("Минск", 32345, "17:30", 19, 30, 51);
+            Train tr1 = new Train("Питер", 12345, 17.15, 25, 40, 35);
+            Train tr2 = new Train("Москва", 22345, 17.45, 43, 27, 30);
+            Train tr3 = new Train("Минск", 32345, 17.30, 19, 30, 51);
             Console.WriteLine(tr1.GetType());
-            Train[] trains;
+            Train[] trains = new Train[] { tr1, tr2, tr3};
+            string dista = Console.ReadLine();
+            double time = Convert.ToDouble(Console.ReadLine());
+            for (int i = 0; i < trains.Length; i++)
+            {
+                if (trains[i].Destination == dista)
+                    Console.WriteLine(trains[i]);
+            }
+            for (int i = 0; i < trains.Length; i++)
+            {
+                if (trains[i].Destination == dista && trains[i].Time > time)
+                    Console.WriteLine(trains[i]);
+            }
+            var train = new { Destination = "smth", Number = 84527, Time = 03.15};
+            Console.WriteLine($"{train.Destination} {train.Number} {train.Time}");
         }
     }
 }
