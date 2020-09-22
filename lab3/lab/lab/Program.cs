@@ -2,7 +2,7 @@
 
 namespace lab
 {
-    class Train
+    public class Train
     {
         private string destination
         {
@@ -15,7 +15,7 @@ namespace lab
                 destination = value;
             }
         }
-        private int number
+        public int number
         {
             get
             {
@@ -72,10 +72,13 @@ namespace lab
             }
         }
         private readonly int ID;
-        Train()
+        static int kolichestvo;
+        /*
+         Train()
         {
 
         }
+        */
         public Train()
         {
             destination = "";
@@ -84,6 +87,7 @@ namespace lab
             amount_kupe = 0;
             amount_plackart = 0;
             amount_lux = 0;
+            kolichestvo++;
         }
         public Train(string a, int b, string c, int e, int f, int g)
         {
@@ -93,30 +97,69 @@ namespace lab
             amount_kupe = e;
             amount_plackart = f;
             amount_lux = g;
+            kolichestvo++;
         }
-        public Train(string a = "", int b = 10000, string c = "", int e = 0, int f = 0, int g = 0)
+        public Train(string a = "", int b = 10000, string c = "", int e = 0, int f = 0)
         {
             destination = a;
             number = b;
             time = c;
             amount_kupe = e;
             amount_plackart = f;
-            amount_lux = g;
+            kolichestvo++;
         }
         static Train()
         {
             Console.WriteLine("Добавлен новый поезд");
+            kolichestvo++;
         }
-        public static int AmountOut()
+        public static int AmountOut(ref int amount, out int Output)
         {
-            return amount;
+            return Output = amount;
+        }
+        static string info = "Класс, для представления информации о поездах и их маршрутах";
+        public static string GetInfo()
+        {
+            return info;
+        }
+        /*
+         public partial class Train
+        { 
+
+        }
+        */
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            Train tr = obj as Train;
+            if (tr as Train == null)
+                return false;
+
+            return tr.number == this.number;
+        }
+        public override int GetHashCode()
+        {
+            int Dest;
+            if (destination == "Питер")
+                Dest = 1;
+            else Dest = 2;
+            return (int)amount + Dest;
+        }
+        public override string ToString()
+        {
+            return $"{number} {destination} {time}";
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            Train tr = new Train();
+            Train tr1 = new Train("Питер", 12345, "17:15", 25, 40, 35);
+            Train tr2 = new Train("Москва", 22345, "17:45", 43, 27, 30);
+            Train tr3 = new Train("Минск", 32345, "17:30", 19, 30, 51);
+            Console.WriteLine(tr1.GetType());
+            Train[] trains;
         }
     }
 }
