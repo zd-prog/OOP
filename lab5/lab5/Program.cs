@@ -2,7 +2,18 @@
 
 namespace lab5
 {
-    class Transport
+    interface ICloneable
+    {
+        void DoClone();
+    }
+    abstract class BaseClone
+    {
+        public void DoClone()
+        {
+            Console.WriteLine("Абстрактный класс");
+        }
+    }
+    class Transport : BaseClone
     {
         public string type;
         public string Type { get; set; }
@@ -62,7 +73,7 @@ namespace lab5
                 }
             }
         }
-        public class Train : Transport
+        public class Train : Transport, ICloneable
         {
             public int numberoftrain;
             public int NumberOfTrain { get; set; }
@@ -77,6 +88,10 @@ namespace lab5
             public override string ToString()
             {
                 return $"{GetType()} {numberoftrain}";
+            }
+            public new void DoClone()
+            {
+                Console.WriteLine($"Интерфейс {numberoftrain}");
             }
             public class Express : Train
             {
@@ -112,7 +127,7 @@ namespace lab5
                     return $"{GetType()} {volofmotor}";
                 }
             }
-            public class Carriage : Train
+            sealed public class Carriage : Train, ICloneable
             {
                 public int amountofplaces;
                 public int AmountOfPlaces { get; set; }
@@ -128,93 +143,39 @@ namespace lab5
                 {
                     return $"{GetType()} {amountofplaces}";
                 }
-            }
-        }
-        interface ISomeInterface
-        {
-            int Property { get; set; }
-            bool DoClone();
-        }
-        class SomeInterface : ISomeInterface
-        {
-            public int Property { get; set; }
-            public bool DoClone()
-            {
-                return true;
-            }
-        }
-        abstract class AbsCl
-        {
-            public string st;
-            public string St { get; set; }
-            public virtual void Display()
-            {
-                Console.WriteLine(St);
-            }
-            public class FirstCl : AbsCl
-            {
-                public int some;
-                public int Some { get; set; }
-                public override void Display()
+                public new void DoClone()
                 {
-                    Console.WriteLine(Some);
+                    Console.WriteLine($"Интерфейс {amountofplaces}");
                 }
             }
-            public class SecCl : AbsCl
-            {
-                public int something;
-                public int Something { get; set; }
-            }
         }
-        sealed class Seal
-        {
-            public string value;
-            public int Value { get; set; }
-            public Seal()
-            {
-
-            }
-            public Seal(string a = "")
-            {
-                value = a;
-            }
-
-        }
-        
+  
     }
-    interface ICloneable
-        {
-            bool DoClone();
-        }
-        abstract class BaseClone
-        {
-            public abstract bool DoClone();
-        }
-        class UserClass : BaseClone, ICloneable
-        {
-            public override bool DoClone()
-            {
-                Console.WriteLine("Абстрактный класс и интерфейс");
-                return true;
-            }          
-        }
     class Printer
     {
-
+        public void IAmPrinting(Transport someobj)
+        {
+            Console.WriteLine($"Тип объекта - " + someobj.GetType());
+            Console.WriteLine(someobj.ToString());
+        }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            UserClass userClass = new UserClass();
-            userClass.DoClone();
             Transport transport = new Transport("type", 111);
+            transport.DoClone();
             Transport.Car car = new Transport.Car("name");
+            car.DoClone();
             Transport.Train train = new Transport.Train(222);
+            train.DoClone();
             Transport.Car.Motor motor = new Transport.Car.Motor(30);
+            motor.DoClone();
             Transport.Train.Motor motor1 = new Transport.Train.Motor(40);
             Transport.Train.Express express = new Transport.Train.Express(555);
+            express.DoClone();
             Transport.Train.Carriage carriage = new Transport.Train.Carriage(60);
+            carriage.DoClone();
             if (train is Transport)
                 Console.WriteLine("Train is transport");
             else
@@ -228,6 +189,12 @@ namespace lab5
             {
                 Console.WriteLine("Преобразование прошло удачно");
             }
+
+            dynamic[] arrayOfTransport = new dynamic[] { train, transport, carriage, car };
+            Printer printer = new Printer();
+            printer.IAmPrinting(train);
+            printer.IAmPrinting(car);
+            printer.IAmPrinting(carriage);
         }
     }
 }
