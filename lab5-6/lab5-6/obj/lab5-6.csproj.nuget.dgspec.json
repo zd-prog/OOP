@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Учёба\\2_курс\\прога\\lab4\\lab3\\lab3.csproj": {}
+    "D:\\Учёба\\2_курс\\прога\\lab5-6\\lab5-6\\lab5-6.csproj": {}
   },
   "projects": {
-    "D:\\Учёба\\2_курс\\прога\\lab4\\lab3\\lab3.csproj": {
+    "D:\\Учёба\\2_курс\\прога\\lab5-6\\lab5-6\\lab5-6.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Учёба\\2_курс\\прога\\lab4\\lab3\\lab3.csproj",
-        "projectName": "lab3",
-        "projectPath": "D:\\Учёба\\2_курс\\прога\\lab4\\lab3\\lab3.csproj",
+        "projectUniqueName": "D:\\Учёба\\2_курс\\прога\\lab5-6\\lab5-6\\lab5-6.csproj",
+        "projectName": "lab5-6",
+        "projectPath": "D:\\Учёба\\2_курс\\прога\\lab5-6\\lab5-6\\lab5-6.csproj",
         "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "D:\\Учёба\\2_курс\\прога\\lab4\\lab3\\obj\\",
+        "outputPath": "D:\\Учёба\\2_курс\\прога\\lab5-6\\lab5-6\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -40,6 +40,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
