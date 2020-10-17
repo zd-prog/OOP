@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace lab5_6
 {
-    public interface ICloneable
+    interface ICloneable
+    {
+        void DoClone();
+    }
+    interface ICloneable1
     {
         void DoClone();
     }
     public abstract class BaseClone
     {
         abstract public void DoClone();
-    }
-    public class Realization : BaseClone, ICloneable
-    {
-        override public void DoClone()
+        public BaseClone()
         {
-            Console.WriteLine("AbstractMethod");
+
         }
+    }
+    public class Transport : BaseClone, ICloneable, ICloneable1
+    {
         void ICloneable.DoClone()
         {
-            Console.WriteLine("WriteInterfaceMethod Realization");
+            Console.WriteLine("interface 1");
         }
-
-
-    }
-    public class Transport : BaseClone
-    {
+        void ICloneable1.DoClone()
+        {
+            Console.WriteLine("interface 2");
+        }
         public override void DoClone()
         {
-            Console.WriteLine("Abstract Transport");
+            Console.WriteLine("Abstract");
         }
         public string type;
         public string Type { get; set; }
@@ -42,26 +47,20 @@ namespace lab5_6
         public int max_speed;
         public int MaxSpeed { get; set; }
 
-        public Transport[] transports;
-        public Transport this[int index]
-        {
-            get
-            {
-                return this.transports[index];
-            }
-            set
-            {
-                this.transports[index] = value;
-            }
-        }
-        enum Age
+        public enum Age
         {
             New,
             Old
         }
         public struct Structura
         {
-            public string Value;
+            public string text;
+            public int value;
+            public Structura(string a, int b)
+            {
+                text = a;
+                value = b;
+            }
         }
         public Transport()
         {
@@ -77,38 +76,17 @@ namespace lab5_6
         }
         public override string ToString()
         {
-            return $"{GetType()} Тип транспорта: {type}, цена: {price}, минимальная цена: {min_speed}, максимальная цена: {max_speed}, объём двигателя: {volume}";
+            return $"Тип транспорта: {type}, цена: {price}, минимальная скорость: {min_speed}, максимальная скорость: {max_speed}, объём двигателя: {volume}";
         }
         public partial class Car : Transport
         {
             public string typeofcar;
             public string TypeOfCar { get; set; }
-            public Car[] cars1;
-            public Car this[int index]
-            {
-                get
-                {
-                    return this.cars1[index];
-                }
-                set
-                {
-                    this.cars1[index] = value;
-                }
-            }
             public Car() : base()
             {
 
             }
-            public Car(string a, int b, int c, int d, int e, Car[] cars) : base(a,b,c,d,e)
-            {
-                this.TypeOfCar = a;
-                this.cars1 = cars;
-                this.Price = b;
-                this.MinSpeed = c;
-                this.MaxSpeed = d;
-                this.Volume = e;
-            }
-            public Car(string a, int b, int c, int d, int e) : base(a, b, c, d, e)
+            public Car(string a, int b, int c, int d, int e) : base(a,b,c,d,e)
             {
                 this.TypeOfCar = a;
                 this.Price = b;
@@ -235,23 +213,13 @@ namespace lab5_6
     {
         public string Name { get; set; }
         public Transport.Car car;
-        public Transport tr;
+        public Transport tr;        
+        public List<Transport> _container { get; set; }
         public TransportAgency()
         {
+            _container = new List<Transport>();
+        }
 
-        }
-        public TransportAgency(Transport.Car cars, Transport transport)
-        {
-            this.car = cars;
-            this.tr = transport;
-        }
-        public TransportAgency(Transport.Car c, Transport t, string nm)
-        {
-            this.car = c;
-            this.tr = t;
-            this.Name = nm;
-        }
-        private List<Transport> _container;
         public Transport this[int index]
         {
             get { return _container[index]; }
@@ -262,11 +230,7 @@ namespace lab5_6
             return base.ToString() + $"\nName: {Name}";
         }
         public void AddItem(Transport transport) => _container.Add(transport);
-        public void AddItem(Transport.Car car) => _container.Add(car);
-
         public void Delete(Transport transport) => _container.Remove(transport);
-        public void Delete(Transport.Car car) => _container.Remove(car);
-
         public void Print()
         {
             for (int i = 0; i < _container.Count - 1; i++)
@@ -275,45 +239,37 @@ namespace lab5_6
             }
         }
     }
-    public class TransportController
+    public static class TransportController
     {
-        public void Sum(TransportAgency transportAgency)
+        public static void Sum(List<Transport> list)
         {
             int sum = 0;
-            for (int i = 0; i < transportAgency.tr.transports.Length; i++)
+            foreach (Transport tr in list)
             {
-                sum += transportAgency.tr.transports[i].Price;
+                sum += tr.Price;
             }
             Console.WriteLine(sum);
         }
-        public void SortByFuel(TransportAgency transportAgency)
+        public static void SortByFuel(List<Transport> list)
         {
-            Transport.Car temp = null;
-            for (int i = 1; i < transportAgency.car.cars1.Length - 1 ; i++)
-            {
-                if (transportAgency.car.cars1[i].Volume > transportAgency.car.cars1[i + 1].Volume)
-                {
-                    temp = transportAgency.car.cars1[i];
-                    transportAgency.car.cars1[i]= transportAgency.car.cars1[i + 1];
-                    transportAgency.car.cars1[i + 1] = temp;
-                }
-            }
+            var linq = (from Transport.Car c in list
+                        orderby c.Volume ascending
+                        select c) as List<Transport>;
+            var lambda = list.OrderBy(c => c.Volume).ToList();
+            foreach (var el in lambda)
+                Console.WriteLine(el);
         }
-        public void BySpeed(TransportAgency transportAgency)
+        public static void BySpeed(List<Transport> list)
         {
-            Console.WriteLine("Введите минимальную и максимальную скорость");
-            int min = 0, max = 0;
-            min = Console.Read();
-            max = Console.Read();
-            Transport temp = null;
-            for (int i = 0; i < transportAgency.tr.transports.Length; i++)
+            Console.WriteLine("Введите минимальную скорость");
+            int min = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите максимальную скорость");
+            int max = Convert.ToInt32(Console.ReadLine());
+            foreach (var el in list)
             {
-                if (transportAgency.tr.transports[i].MinSpeed == min && transportAgency.tr.transports[i].MaxSpeed == max)
-                {
-                    temp = transportAgency.tr.transports[i];
-                }
+                if (el.min_speed == min && el.max_speed == max)
+                    Console.WriteLine(el);
             }
-            Console.WriteLine(temp);
         }
     }
 
@@ -323,17 +279,16 @@ namespace lab5_6
         {
             Transport transport = new Transport("transport", 10000, 60, 120, 8);
             transport.DoClone();
+            ((ICloneable)transport).DoClone();
+            ((ICloneable1)transport).DoClone();
+
             Transport.Car car = new Transport.Car("car", 20000, 55, 100, 8);
-            car.DoClone();
             Transport.Train train = new Transport.Train(222);
-            train.DoClone();
             Transport.Car.Motor motor = new Transport.Car.Motor(30);
-            motor.DoClone();
             Transport.Train.Motor motor1 = new Transport.Train.Motor(40);
             Transport.Train.Express express = new Transport.Train.Express(555);
-            express.DoClone();
             Transport.Train.Carriage carriage = new Transport.Train.Carriage(60);
-            carriage.DoClone();
+
             if (train is Transport)
                 Console.WriteLine("Train is transport");
             else
@@ -355,9 +310,9 @@ namespace lab5_6
             printer.IAmPrinting(carriage);
 
             Transport transport1 = new Transport("transport", 15000, 80, 120, 9);
-            Transport transport2 = new Transport("transport", 17000, 30, 90, 9);
+            Transport transport2 = new Transport("transport", 17000, 80, 120, 7);
 
-            Transport.Car car2 = new Transport.Car("car", 30000, 120, 200, 20);
+            Transport.Car car2 = new Transport.Car("car", 30000, 120, 200, 2);
 
 
             TransportAgency agency = new TransportAgency();
@@ -366,12 +321,16 @@ namespace lab5_6
             agency.AddItem(transport2);
             agency.AddItem(car2);
 
-            TransportController controller = new TransportController();
-            controller.Sum(agency);
-            controller.BySpeed(agency);
-            controller.SortByFuel(agency);
+            agency.Print();
 
+            TransportController.Sum(agency._container);
+            TransportController.SortByFuel(agency._container);
+            TransportController.BySpeed(agency._container);
 
+            Transport.Structura structura = new Transport.Structura("text", 5);
+            Console.WriteLine(structura);
+
+            Console.WriteLine(Transport.Age.Old);
         }
     }
 }
