@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Учёба\\2_курс\\прога\\lab8\\lab8\\lab8.csproj": {}
+    "D:\\Учёба\\2_курс\\прога\\lab10\\lab10\\lab10.csproj": {}
   },
   "projects": {
-    "D:\\Учёба\\2_курс\\прога\\lab8\\lab8\\lab8.csproj": {
+    "D:\\Учёба\\2_курс\\прога\\lab10\\lab10\\lab10.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Учёба\\2_курс\\прога\\lab8\\lab8\\lab8.csproj",
-        "projectName": "lab8",
-        "projectPath": "D:\\Учёба\\2_курс\\прога\\lab8\\lab8\\lab8.csproj",
+        "projectUniqueName": "D:\\Учёба\\2_курс\\прога\\lab10\\lab10\\lab10.csproj",
+        "projectName": "lab10",
+        "projectPath": "D:\\Учёба\\2_курс\\прога\\lab10\\lab10\\lab10.csproj",
         "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "D:\\Учёба\\2_курс\\прога\\lab8\\lab8\\obj\\",
+        "outputPath": "D:\\Учёба\\2_курс\\прога\\lab10\\lab10\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

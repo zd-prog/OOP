@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 namespace lab5_6
@@ -15,7 +14,7 @@ namespace lab5_6
         void DoClone();
     }
     public abstract class BaseClone
-    {
+    { 
         abstract public void DoClone();
         public BaseClone()
         {
